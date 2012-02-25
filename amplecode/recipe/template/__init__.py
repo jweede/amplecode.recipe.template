@@ -34,11 +34,11 @@ class Recipe(object):
         self.options = options
 
         # Validate presence of required options
-        if not "template-file" in options:
-            log.error("You need to specify a template-file")
+        if not ("template-file" in options or "input" in options):
+            log.error("You need to specify a template-file or input")
             raise zc.buildout.UserError("No template file specified")
-        if not "target-file" in options:
-            log.error("You need to specify a target-file")
+        if not ("target-file" in options or "output" in options):
+            log.error("You need to specify a target-file or output")
             raise zc.buildout.UserError("No target file specified")
 
     def install(self):
@@ -73,8 +73,16 @@ class Recipe(object):
             return d
 
         # Validate template and target lists
-        template_files = split(self.options["template-file"])
-        target_files = split(self.options["target-file"])
+        template_file_option = self.options.get(
+                "template-file",
+                self.options.get("input")
+                )
+        target_file_option = self.options.get(
+                "target-file",
+                self.options.get("output")
+                )
+        template_files = split(template_file_option)
+        target_files = split(target_file_option)
         if len(template_files) != len(target_files):
             raise zc.buildout.UserError(
                     "The number of template and target files must match")
