@@ -134,6 +134,11 @@ class Recipe(object):
             template = self._load_template(jinja2_env, template_file)
             output = template.render(**context)
 
+            # Test if path directory exist, if not then create
+            target_dir = os.path.dirname(target_file)
+            if not os.path.exists(target_dir):
+                os.makedirs(target_dir, 0755)
+
             # Make target file
             target_file = os.path.abspath(target_file)
             self._ensure_dir(os.path.dirname(target_file))
