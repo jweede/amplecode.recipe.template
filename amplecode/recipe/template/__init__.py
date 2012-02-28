@@ -145,7 +145,7 @@ class Recipe(object):
 
             # Test if path directory exist, if not then create
             target_dir = os.path.dirname(target_file)
-            if not os.path.exists(target_dir):
+            if target_dir and not os.path.exists(target_dir):
                 os.makedirs(target_dir, 0755)
 
             # Make target file
