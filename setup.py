@@ -21,7 +21,7 @@ setup(
     license="BSD",
     packages=find_packages(),
     namespace_packages=("amplecode", "amplecode.recipe"),
-    install_requires=("setuptools", "zc.recipe.egg", "Jinja2"),
+    install_requires=("setuptools", "zc.recipe.egg", "Jinja2", "zope.dottedname"),
     zip_safe=True,
     entry_points="""
         [zc.buildout]

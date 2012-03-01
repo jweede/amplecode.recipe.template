@@ -12,6 +12,7 @@ import logging
 import jinja2
 import zc.buildout
 from zc.recipe.egg.egg import Eggs
+from zope.dottedname.resolve import resolve as resolve_dotted
 
 
 log = logging.getLogger(__name__)
@@ -130,13 +131,26 @@ class Recipe(object):
             raise zc.buildout.UserError("parts used as a variable in %s"
                                         % self.name)
 
-        # Set up jinja2 environment
-        jinja2_env = self._jinja2_env(filters={
+        filters = self.options.get('jinja2_filters')
+        if filters:
+            jinja2_filters = {}
+            filters = filters.split()
+            for filter in filters:
+                jinja2_filters[filter.split('.')[-1]] = resolve_dotted(filter)
+        else:
+            jinja2_filters = {}
+
+        filters = {
             "split": split,
             "as_bool": as_bool,
             "type": type,
             "lwrap": lwrap
-        })
+        }
+        filters.update(jinja2_filters)
+
+        # Set up jinja2 environment
+        jinja2_env = self._jinja2_env(filters=filters)
+
 
         # Load, render, and save files
         for template_file, target_file, executable in files:
