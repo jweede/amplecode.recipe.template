@@ -1,3 +1,9 @@
+Version 1.2 (2012-04-20)
+------------------------
+* Custom filter for jinja2 support added.
+* Some fixes
+
+
 Version 1.1 (pending)
 ---------------------
 
