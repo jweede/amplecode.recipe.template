@@ -63,14 +63,6 @@ class Recipe(object):
 
             return s.lower() in ("yes", "true", "1", "on")
 
-        def lwrap(l, w=None):
-            """docstring for lwrap"""
-            result = []
-            o = w or '"'
-            for elem in l:
-                result.append(o + elem + o)
-            return result
-
         def strip_dict(d):
             """
             Strips the values of a dictionary in place. All values are assumed
@@ -144,13 +136,11 @@ class Recipe(object):
             "split": split,
             "as_bool": as_bool,
             "type": type,
-            "lwrap": lwrap
         }
         filters.update(jinja2_filters)
 
         # Set up jinja2 environment
         jinja2_env = self._jinja2_env(filters=filters)
-
 
         # Load, render, and save files
         for template_file, target_file, executable in files:
