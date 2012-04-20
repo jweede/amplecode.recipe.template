@@ -1,10 +1,10 @@
-=========================
-amplecode.recipe.template
-=========================
+======================
+brodul.recipe.template
+======================
 
-amplecode.recipe.template is a Buildout recipe for generating files using Jinja2 templates. The recipe configures a Jinja2 environment, by default relative to the Buildout directory, allowing templates to extend and include other templates relative to the environment.
+brodul.recipe.template is a fork of amplecode.recipe.template, a Buildout recipe for generating files using Jinja2 templates. The recipe configures a Jinja2 environment, by default relative to the Buildout directory, allowing templates to extend and include other templates relative to the environment.
 
-Downloads are available from pypi: http://pypi.python.org/pypi/amplecode.recipe.template/
+Downloads are available from pypi: http://pypi.python.org/pypi/brodul.recipe.template/
 
 Buildout Options
 ================
@@ -14,6 +14,7 @@ Buildout Options
 * base-dir: Base directory of the Jinja2 environment. Template file paths are relative to this directory. Default is the Buildout directory.
 * target-executable: One or more boolean flags (yes|no|true|false|1|0) indicating the executability of the target files. If only one flag is given it is applied to all target files.
 * eggs: Reserved for a list of eggs, conveniently converted into a pkg_resources.WorkingSet when specified
+* jinja2_filters: custom filter functions separated by white-space
 
 Additional options are simply forwarded to the templates, and options from all the other parts are made available through ``parts.<part-name>.<option-name>`` and ``parts[<part-name>][<option-name>]``.
 
@@ -36,7 +37,7 @@ foo.txt is created from foo.txt.jinja2 without any extra options::
   parts = foo
 
   [foo]
-  recipe = amplecode.recipe.template
+  recipe = brodul.recipe.template
   template-file = foo.txt.jinja2
   target-file = foo.txt
 
@@ -49,7 +50,7 @@ foo.txt is created from myapp/foo.txt.jinja2, bar.sh is created from myapp/bar.s
   parts = foo
 
   [foo]
-  recipe = amplecode.recipe.template
+  recipe = brodul.recipe.template
   base-dir = myapp
   template-file =
       foo.txt.jinja2
@@ -63,6 +64,22 @@ foo.txt is created from myapp/foo.txt.jinja2, bar.sh is created from myapp/bar.s
   project_name = Another Example
   author = Me
 
+
+Custom filters
+==============
+
+The filter function is located in the same directory as the buildout.cfg in a filter.py file. If you want to use more filters separate them with a white space. ::
+
+  [buildout]
+  parts = foo
+
+  [foo]
+  recipe = brodul.recipe.template
+  input = foo.txt.jinja2
+  output = foo.txt
+  jinja2_filters = filter.bar
+
+
 Changelog
 =========
 
@@ -72,3 +89,15 @@ License
 =======
 
 See the LICENSE file
+
+Todo
+====
+
+* tests
+
+Why this fork
+=============
+
+* there should be an input and output option in buildout (since the '-' in 'target-file' char is parsed by jinja2)
+* custom filters support
+* create output dirs if they don't exist
