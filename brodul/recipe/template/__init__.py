@@ -5,9 +5,10 @@ Buildout recipe for making files out of Jinja2 templates.
 __author__ = 'Torgeir Lorange Ostby <torgeilo@gmail.com>'
 __version__ = '1.1'
 
+import logging
 import os
 import re
-import logging
+import sys
 
 import jinja2
 import zc.buildout
@@ -33,6 +34,10 @@ class Recipe(object):
         self.buildout = buildout
         self.name = name
         self.options = options
+
+        # Add buildout dir to python path so custom filter can be imported
+        sys.path.append(self.buildout['buildout']['directory'])
+
 
         # Validate presence of required options
         if not ("template-file" in options or "input" in options):
@@ -127,8 +132,12 @@ class Recipe(object):
         if filters:
             jinja2_filters = {}
             filters = filters.split()
-            for filter in filters:
-                jinja2_filters[filter.split('.')[-1]] = resolve_dotted(filter)
+            for filter_ in filters:
+                try:
+                    jinja2_filters[filter_.split('.')[-1]] = resolve_dotted(filter_)
+                except ImportError, e:
+                    raise zc.buildout.UserError("Filter '%s' not found.\n%s"
+                                                % (filter_, e))
         else:
             jinja2_filters = {}
 
