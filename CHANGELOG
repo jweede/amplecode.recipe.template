@@ -1,10 +1,19 @@
+Version 1.2.1 (pending)
+-----------------------
+* Tests added
+* Custom filter bug fixed
+
+
 Version 1.2 (2012-04-20)
 ------------------------
+* All necessary subdirectories are created for the target files. Thanks to brodul for the patch.
+* All parts in buildout.cfg are available to the templates, instead of being limited to the parts listed in buildout:parts. Thanks to brodul for the patch.
 * Custom filter for jinja2 support added.
+* Added new options for input and output files
 * Some fixes
 
 
-Version 1.1 (pending)
+Version 1.1 (unknown)
 ---------------------
 
 * Replaced iterable test with split filter for better control and simpler template logic
