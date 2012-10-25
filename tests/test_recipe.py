@@ -1,16 +1,28 @@
 import os
 import unittest
 
+import zc.buildout.buildout
 
-class TestRecipe(unittest.TestCase):
-    RESULT_BASE_DIR = ".."
+class TemplateTest(unittest.TestCase):
 
-    def test_a(self):
-        result_dir = os.path.abspath(os.path.join(self.RESULT_BASE_DIR,
-                                                  "test_a"))
-        file_1_path = os.path.join(result_dir, "test_a1.result")
-        file_2_path = os.path.join(result_dir, "test_a2.result")
-        file_1 = open(file_1_path).read()
-        file_2 = open(file_2_path).read()
+    def setUp(self):
+        pass
 
-        self.assertEquals(file_1, file_2)
+    def test_simple(self):
+        zc.buildout.buildout.main(["-o", "install","simple_test"])
+
+        f = open("test.out")
+        self.assertEquals("root\n", f.read())
+
+    def test_filter(self):
+        zc.buildout.buildout.main(["-o", "install","filter_test"])
+
+        f = open("test.out")
+
+        self.assertEquals('    "root",\n    "toor"\n', f.read())
+
+    def tearDown(self):
+        os.remove("test.out")
+
+if "__main__" == __name__:
+    unittest.main()
