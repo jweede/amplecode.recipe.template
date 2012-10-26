@@ -118,8 +118,11 @@ class Recipe(object):
             names, eggs = eggs.working_set()
             context["eggs"] = eggs
 
+        # Make recursive dict to be enable access dashed values.
+        context['context'] = context
+
         # Make options from other parts available.
-        part_options = self.buildout
+        part_options = dict(self.buildout)
         if 'parts' not in context.keys():
             context.update({'parts': part_options})
         else:

@@ -8,21 +8,33 @@ class TemplateTest(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_simple(self):
-        zc.buildout.buildout.main(["-o", "install","simple_test"])
+    def default(self, test_name):
+        zc.buildout.buildout.main(["-o", "install", test_name])
 
         f = open("test.out")
         self.assertEquals("root\n", f.read())
 
+    def test_simple(self):
+        self.default('simple-test')
+
     def test_filter(self):
-        zc.buildout.buildout.main(["-o", "install","filter_test"])
+        zc.buildout.buildout.main(["-o", "install","filter-test"])
 
         f = open("test.out")
 
         self.assertEquals('    "root",\n    "toor"\n', f.read())
 
+    def test_this(self):
+        self.default('this-test')
+
+    def test_dashed(self):
+        self.default('dashed-test')
+
     def tearDown(self):
-        os.remove("test.out")
+        try:
+            os.remove("test.out")
+        except:
+            pass
 
 if "__main__" == __name__:
     unittest.main()
