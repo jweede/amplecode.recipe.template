@@ -55,14 +55,37 @@ foo.txt is created from myapp/foo.txt.jinja2, bar.sh is created from myapp/bar.s
   template-file =
       foo.txt.jinja2
       bar.sh.jinja2
-  target-file =
+  input =
       foo.txt
       bar.sh
-  target-executable =
+  output =
       false
       true
   project_name = Another Example
   author = Me
+
+  [bar]
+  dashed-value = borg
+  value = cash
+
+foo.txt.jinja2:
+::
+
+  {{ parts.bar['dashed-value'] }}
+  {{ parts.bar.value }}
+  {{ author }}
+
+.. note::
+  
+  `{{ parts.bar.dashed-value }}` won't work, but you can access it as a dict key.
+
+Dashed value in the same part
+=============================
+
+If there is a dashed-value in brodul.recipe.template part and you would like to reference it, use:
+::
+  
+  {{context['dashed-value']}}
 
 
 Custom filters

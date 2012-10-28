@@ -2,6 +2,7 @@ Version 1.2.1 (pending)
 -----------------------
 * Tests added
 * Custom filter bug fixed
+* Added a way to reference to dashed-values in jinja2 templates, if the value is in the same part
 
 
 Version 1.2 (2012-04-20)
