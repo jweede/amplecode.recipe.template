@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="brodul.recipe.template",
-    version="1.2",
+    version="1.2.1",
     author="Andraz Brodnik",
     author_email="brodul@brodul.org",
     url="http://github.com/brodul/amplecode.recipe.template",
