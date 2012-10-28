@@ -6,6 +6,8 @@ brodul.recipe.template is a fork of amplecode.recipe.template, a Buildout recipe
 
 Downloads are available from pypi: http://pypi.python.org/pypi/brodul.recipe.template/
 
+.. image:: https://secure.travis-ci.org/brodul/amplecode.recipe.template.png
+
 Buildout Options
 ================
 
