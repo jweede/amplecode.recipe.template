@@ -18,7 +18,7 @@ class TemplateTest(unittest.TestCase):
         self.default('simple-test')
 
     def test_filter(self):
-        zc.buildout.buildout.main(["-o", "install","filter-test"])
+        zc.buildout.buildout.main(["-o", "install", "filter-test"])
 
         f = open("test.out")
 
@@ -29,6 +29,12 @@ class TemplateTest(unittest.TestCase):
 
     def test_dashed(self):
         self.default('dashed-test')
+
+    def test_readme(self):
+        zc.buildout.buildout.main(["-o", "install", "readme-test"])
+        f = open("test.out")
+
+        self.assertEquals('borg\ncash\nMe\n', f.read())
 
     def tearDown(self):
         try:
