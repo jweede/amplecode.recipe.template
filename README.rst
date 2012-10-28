@@ -116,11 +116,9 @@ See the LICENSE file
 Todo
 ====
 
-* tests
 
 Why this fork
 =============
 
 * there should be an input and output option in buildout (since the '-' in 'target-file' char is parsed by jinja2)
 * custom filters support
-* create output dirs if they don't exist
