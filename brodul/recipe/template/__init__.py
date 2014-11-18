@@ -195,8 +195,7 @@ class Recipe(object):
             env.filters.update(filters)
         return env
 
-    @staticmethod
-    def _load_template(env, path):
+    def _load_template(self, env, path):
         """
         Tried to load the Jinja2 template given by the environment and
         template path.
@@ -208,8 +207,7 @@ class Recipe(object):
             log.error("Could not find the template file: %s" % e.name)
             raise zc.buildout.UserError("Template file not found: %s" % e.name)
 
-    @staticmethod
-    def _ensure_dir(directory):
+    def _ensure_dir(self, directory):
         """
         Ensures that the specified directory exists.
         """
