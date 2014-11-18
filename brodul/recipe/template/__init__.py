@@ -38,7 +38,6 @@ class Recipe(object):
         # Add buildout dir to python path so custom filter can be imported
         sys.path.append(self.buildout['buildout']['directory'])
 
-
         # Validate presence of required options
         if not ("template-file" in options or "input" in options):
             log.error("You need to specify a template-file or input")
@@ -59,7 +58,7 @@ class Recipe(object):
             Template filter splitting on any whitespace.
             """
 
-            return re.split("\s+", s.strip())
+            return re.split(r'\s+', s.strip())
 
         def as_bool(s):
             """
@@ -80,18 +79,19 @@ class Recipe(object):
 
         # Validate template and target lists
         template_file_option = self.options.get(
-                "template-file",
-                self.options.get("input")
-                )
+            "template-file",
+            self.options.get("input"),
+        )
         target_file_option = self.options.get(
-                "target-file",
-                self.options.get("output")
-                )
+            "target-file",
+            self.options.get("output"),
+        )
         template_files = split(template_file_option)
         target_files = split(target_file_option)
         if len(template_files) != len(target_files):
             raise zc.buildout.UserError(
-                    "The number of template and target files must match")
+                "The number of template and target files must match"
+            )
 
         # Validate and normalise target executable option
         target_executables = split(self.options.get("target-executable",
@@ -102,8 +102,10 @@ class Recipe(object):
             target_executables = (value for i in xrange(len(template_files)))
         else:
             if len(target_executables) != len(template_files):
-                raise zc.buildout.UserError("The number of target executables"
-                        "must 0, 1 or match the number of template files")
+                raise zc.buildout.UserError(
+                    "The number of target executables"
+                    "must 0, 1 or match the number of template files"
+                )
 
         # Assemble lists
         files = zip(template_files, target_files, target_executables)
@@ -122,12 +124,14 @@ class Recipe(object):
         context['context'] = context
 
         # Make options from other parts available.
-        part_options = dict(self.buildout)
+        part_options = SafeBuildout(self.buildout)
         if 'parts' not in context.keys():
             context.update({'parts': part_options})
         else:
-            log.error("You should not use parts as a name of a variable,"
-                      " since it is used internally by this receipe")
+            log.error(
+                "You should not use parts as a name of a variable,"
+                " since it is used internally by this recipe"
+            )
             raise zc.buildout.UserError("parts used as a variable in %s"
                                         % self.name)
 
@@ -175,12 +179,7 @@ class Recipe(object):
 
         return self.options.created()
 
-    def update(self):
-        """
-        Recipe update function. Does the same as install.
-        """
-
-        self.install()
+    update = install
 
     def _jinja2_env(self, filters=None):
         """
@@ -188,14 +187,16 @@ class Recipe(object):
         """
 
         base = os.path.abspath(os.path.join(
-                self.buildout["buildout"]["directory"],
-                self.options.get("base-dir", "")))
+            self.buildout["buildout"]["directory"],
+            self.options.get("base-dir", "")),
+        )
         env = jinja2.Environment(loader=jinja2.FileSystemLoader(base))
         if filters:
             env.filters.update(filters)
         return env
 
-    def _load_template(self, env, path):
+    @staticmethod
+    def _load_template(env, path):
         """
         Tried to load the Jinja2 template given by the environment and
         template path.
@@ -207,10 +208,22 @@ class Recipe(object):
             log.error("Could not find the template file: %s" % e.name)
             raise zc.buildout.UserError("Template file not found: %s" % e.name)
 
-    def _ensure_dir(self, directory):
+    @staticmethod
+    def _ensure_dir(directory):
         """
         Ensures that the specified directory exists.
         """
 
         if directory and not os.path.exists(directory):
             os.makedirs(directory, 0755)
+
+
+class SafeBuildout(object):
+
+    def __init__(self, dict_like):
+        self.dict_like = dict_like
+        self.get = dict_like.get
+        self.keys = dict_like.keys
+
+    def __getattr__(self, item):
+        return self.dict_like.get(item)
