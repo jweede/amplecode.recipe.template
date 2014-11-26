@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="brodul.recipe.template",
-    version="1.2.1.jweede",
-    author="Andraz Brodnik",
-    author_email="brodul@brodul.org",
-    url="http://github.com/brodul/amplecode.recipe.template",
+    name="jweede.recipe.template",
+    version="1.2.2",
+    author="Jon Wedaman",
+    author_email="jweede@gmail.com",
+    url="http://github.com/jweede/amplecode.recipe.template",
     description="Buildout recipe for making files out of Jinja2 templates",
     long_description=open("README.rst").read(),
     classifiers=(
@@ -20,11 +20,11 @@ setup(
     keywords="zc.buildout recipe template Jinja2",
     license="BSD",
     packages=find_packages(),
-    namespace_packages=("brodul", "brodul.recipe"),
+    namespace_packages=("jweede", "jweede.recipe"),
     install_requires=("setuptools", "zc.recipe.egg", "Jinja2", "zope.dottedname"),
     zip_safe=True,
     entry_points="""
         [zc.buildout]
-        default = brodul.recipe.template:Recipe
+        default = jweede.recipe.template:Recipe
     """,
 )

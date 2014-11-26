@@ -1,10 +1,10 @@
 ======================
-brodul.recipe.template
+jweede.recipe.template
 ======================
 
-brodul.recipe.template is a fork of amplecode.recipe.template, a Buildout recipe for generating files using Jinja2 templates. The recipe configures a Jinja2 environment, by default relative to the Buildout directory, allowing templates to extend and include other templates relative to the environment.
+jweede.recipe.template is a fork of amplecode.recipe.template, a Buildout recipe for generating files using Jinja2 templates. The recipe configures a Jinja2 environment, by default relative to the Buildout directory, allowing templates to extend and include other templates relative to the environment.
 
-Downloads are available from pypi: http://pypi.python.org/pypi/brodul.recipe.template/
+Downloads are available from pypi: http://pypi.python.org/pypi/jweede.recipe.template/
 
 .. image:: https://secure.travis-ci.org/brodul/amplecode.recipe.template.png
 
