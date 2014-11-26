@@ -1,3 +1,8 @@
+Version 1.2.2 (2014-11-26)
+-----------------------
+* Updated tests for buildout2
+* fixed possible issue with templates pushing mutations back to buildout
+
 Version 1.2.1 (2012-10-28)
 -----------------------
 * Tests added
