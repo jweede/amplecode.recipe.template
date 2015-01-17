@@ -3,7 +3,7 @@ Buildout recipe for making files out of Jinja2 templates.
 """
 
 __author__ = 'Torgeir Lorange Ostby <torgeilo@gmail.com>'
-__version__ = '1.1'
+__version__ = '1.2.3'
 
 import logging
 import os
@@ -152,6 +152,7 @@ class Recipe(object):
             "split": split,
             "as_bool": as_bool,
             "type": type,
+            "eval": eval,
         }
         filters.update(jinja2_filters)
 
