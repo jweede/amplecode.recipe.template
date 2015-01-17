@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="jweede.recipe.template",
-    version="1.2.3",
+    version="1.2.4",
     author="Jon Wedaman",
     author_email="jweede@gmail.com",
     url="http://github.com/jweede/amplecode.recipe.template",
